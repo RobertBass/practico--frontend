@@ -9,7 +9,7 @@
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap"
       rel="stylesheet"
     />
-    <title>Document</title>
+    <title>New Account</title>
 
     <style>
       :root {
@@ -64,17 +64,27 @@
         margin-bottom: 4px;
       }
 
-.value{
-    color: var(--very-light-pink);
-    font-size: var(--md);
-    margin: 8px 0 32px 0;
-}
-
-      .secondary-button {
-        background-color: var(--white);
+      .input {
+        background-color: var(--text-input-field);
+        border: none;
         border-radius: 8px;
-        border: 1px solid var(--hospital-green);
-        color: var(--hospital-green);
+        height: 30px;
+        font-size: var(--md);
+        padding: 6px;
+        margin-bottom: 12px;
+      }
+
+      .input-name,
+      .inoput-email,
+      .input-password {
+        margin-bottom: 22px;
+      }
+
+      .primary-button {
+        background-color: var(--hospital-green);
+        border-radius: 8px;
+        border: none;
+        color: var(--white);
         width: 100%;
         cursor: pointer;
         font-size: var(--md);
@@ -97,7 +107,7 @@
           justify-content: space-between;
         }
 
-        .secondary-button {
+        .create-button {
           width: 300px;
           position: absolute;
           bottom: 0;
@@ -114,19 +124,34 @@
         <form action="/" class="form">
           <div>
             <label for="name" class="label">Your Name</label>
-            <p class="value">RobertBass</p>
+            <input
+              type="text"
+              id="name"
+              placeholder="Name"
+              class="input input-name"
+            />
 
             <label for="email" class="label">Your Email</label>
-            <p class="value">robertbass@hotmail.com</p>
+            <input
+              type="text"
+              id="email"
+              placeholder="your@email.com"
+              class="input input-email"
+            />
 
             <label for="password" class="label">Create Password</label>
-            <p class="value">*************</p>
+            <input
+              type="password"
+              id="password"
+              placeholder="********"
+              class="input input-password"
+            />
           </div>
 
           <input
             type="submit"
-            value="Edit"
-            class="secondary-button"
+            value="Create Account"
+            class="primary-button create-button"
           />
         </form>
       </div>

@@ -9,7 +9,7 @@
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap"
       rel="stylesheet"
     />
-    <title>Document</title>
+    <title>Confirmation</title>
 
     <style>
       :root {
@@ -48,37 +48,47 @@
         display: none;
       }
 
-      .form{
-        display: flex;
-        flex-direction: column;
-      }
-
-      .form a{
-        color: var(--hospital-green);
-        font-size: var(--sm);
-        text-align: center;
-        text-decoration: none;
-        margin-bottom: 52px;
-      }
-
-      .label{
-        font-size: var(--sm);
-        font-weight: bold;
-        margin-bottom: 4px ;
-      }
-
-      .input{
-        background-color: var(--text-input-field);
-        border: none;
-        border-radius: 8px;
-        height: 30px;
-        font-size: var(--md);
-        padding: 6px;
+      .title {
+        font-size: var(--lg);
         margin-bottom: 12px;
+        text-align: center;
       }
 
-      .input-email{
-        margin-bottom: 22px;
+      .subtitle{
+        color: var(--very-light-pink);
+        font-size: var(--md);
+        font-weight: 300;
+        margin-top: 0;
+        margin-bottom: 32px;
+        text-align: center;
+      }
+
+      .email-image{
+        width: 132px;
+        height: 132px;
+        border-radius: 50%;
+        background-color: var(--text-input-field);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+
+      .email-image img{
+        width: 80px;
+      }
+
+      .resend{
+        font-size: var(--sm);
+      }
+
+      .resend span{
+        color: var(--very-light-pink);
+      }
+
+      .resend a{
+        color: var(--hospital-green);
+        text-decoration: none;
       }
 
       .primary-button{
@@ -86,18 +96,6 @@
         border-radius: 8px;
         border: none;
         color: var(--white);
-        width: 100%;
-        cursor: pointer;
-        font-size: var(--md);
-        font-weight: bold;
-        height: 50px;
-      }
-
-      .secondary-button{
-        background-color: var(--white);
-        border-radius: 8px;
-        border: 1px solid var(--hospital-green);
-        color: var(--hospital-green);
         width: 100%;
         cursor: pointer;
         font-size: var(--md);
@@ -114,13 +112,6 @@
         .logo{
             display: block;
         }
-
-        .secondary-button {
-        width: 300px;
-        position: absolute;
-        bottom: 0;
-        margin-bottom: 24px;
-    }
       }
     </style>
   </head>
@@ -128,33 +119,21 @@
     <div class="main">
       <div class="form-container">
         <img src="./logos/logo_yard_sale.svg" alt="logo" class="logo" />
+        
+        <h1 class="title">Email has been sent</h1>
+        <p class="subtitle">Please, check your inbox for instructions on how to set confirm your password</p>
 
-        <form action="/" class="form">
-          <label for="email" class="label">Email address</label>
-          <input
-            type="text"
-            id="email"
-            placeholder="your@email.com"
-            class="input input-email"
-          />
+        <div class="email-image">
+            <img src="./icons/email.svg" alt="email">
+        </div>
 
-          <label for="password" class="label">New Password</label>
-          <input
-            type="password"
-            id="password"
-            placeholder="********"
-            class="input input-password"
-          />
+        <button class="primary-button loging-button">Login</button>
 
-          <input
-            type="submit"
-            value="Login"
-            class="primary-button login-button"
-          />
-          <a href="/">Forgot my password</a>
-        </form>
+        <p class="resend">
+            <span>Didn't recieve the email?</span>
+            <a href="/">Resend</a>
+        </p>
 
-        <button class="secondary-button signup-button">Sign Up</button>
       </div>
     </div>
   </body>
