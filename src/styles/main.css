@@ -19,7 +19,7 @@ body {
 /*  Nav Styles */
 
 .inactive {
-  display: none;
+  display: none !important;
 }
 
 nav {
@@ -369,6 +369,20 @@ aside {
   border-radius: 0 0 20px 20px;
 }
 
+.aside-content {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white);
+  box-shadow: 8px 0px 10px 1px #aaaaaa;
+  width: 360px;
+  height: calc(100vh - 61px);
+  box-sizing: border-box;
+  position: fixed;
+  right: 0;
+  top: 61px;
+  z-index: 10;
+}
+
 .primary-button {
   background-color: var(--hospital-green);
   border-radius: 8px;
@@ -408,6 +422,42 @@ aside {
   font-size: var(--sm);
   margin-top: 0;
   margin-bottom: 36px;
+}
+
+ /* <=== Animatios ===>*/
+ .item-to-cart{
+  position: absolute;
+  top: 50%;
+  left: 58%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+
+  display: inline-block;
+  height: fit-content;
+  width: fit-content;
+  padding: 4px 6px;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--white);
+  background-color: var(--hospital-green);
+  border-radius: 50%;
+}
+.to-cart-animation {
+  animation: to-cart .4s ease-in-out forwards;
+}
+
+@keyframes to-cart {
+  0% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -200%);
+  }
+  60%, 75%, 100% {
+    opacity: 0;
+  }
 }
 
 @media (max-width: 640px) {
