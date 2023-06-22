@@ -6,13 +6,21 @@ let shopMenu = document.querySelector(".navbar-shopping-cart");
 let closeIcon = document.querySelector(".product-detail-close");
 let shoppingCartContainer = document.querySelector("#shoppingCartContainer");
 let cardsContainer = document.querySelector(".cards-container");
-let prodDetail;
 let body = document.querySelector("body");
+let orderContainer = document.querySelector(".my-order-content");
+let backtoHomeBtn = document.querySelector("#back-to-home");
+let CheckoutBtn = document.querySelector("#checkout")
+let prodDetail;
+let productList = [];
+let shoppingCart = [];
 
-//***************************************************************************************************
-//***************************************************************************************************
 
-const productList = [];
+
+/***************************************************************************************************
+  ARRAY OF PRODUCTS
+****************************************************************************************************/
+
+
 
 productList.push({
   id: 1,
@@ -51,8 +59,9 @@ productList.push({
   category: "Electronics",
 });
 
-//***************************************************************************************************
-//***************************************************************************************************
+/****************************************************************************************************
+ RENDER OF PRODUCTS IN MAIN WINDOW
+*****************************************************************************************************/
 
 function renderProducts(arr) {
   for (let product of arr) {
@@ -96,11 +105,62 @@ function renderProducts(arr) {
   }
 }
 
-//******************************************************************************************************
-//******************************************************************************************************
+
+/****************************************************************************************************
+ RENDER OF PRODUCTS IN SHOPPING CART
+*****************************************************************************************************/
+
+function renderProductsListOfCart(){
+  orderContainer.innerHTML = "";
+  let groupItems = [];
+  let aux = shoppingCart;
+
+  while(aux.length > 0){
+
+    let group = aux.filter((product) => {
+      return product.name === aux[0].name;
+    });
+
+    groupItems.push(group);
+    
+    aux = aux.filter((product) => {
+      return product.name !== group[0].name;
+    });
+  }
+
+  groupItems.forEach((groups) => {
+    let subTotal = 0;
+    let quantity = 0;
+    let priceGroup = groups[0].price;
+    let nameGroup = groups[0].name;
+    let imgGroup = groups[0].img;
+
+    for(article of groups){
+      subTotal += article.price;
+      quantity++;
+    }
+
+    let productInCart = document.createElement("div");
+    productInCart.classList.add("shopping-cart");
+    productInCart.innerHTML = 
+        `<figure>
+          <img
+            src="${imgGroup}"
+            alt="${nameGroup}">
+        </figure>
+        <p>${nameGroup}</p>
+        <p class="shopping-cart__price">($${priceGroup} x ${quantity}) $${subTotal}</p>
+        <img src="./src/icons/icon_close.png" alt="close">`
+
+    orderContainer.appendChild(productInCart);
+  });
+}
+
+/******************************************************************************************************
+  OPEN DETAIL OF PRODUCT SELECTED
+*******************************************************************************************************/
 
 function openDetail(product) {
-  console.log(product);
   let isThereActiveProduct =
     document.querySelectorAll("#productDetail").length > 0;
   if (isThereActiveProduct) {
@@ -116,7 +176,7 @@ function openDetail(product) {
                                             <img src="./src/icons/icon_close.png" alt="close" />
                                         </div>`;
   
-  productDetailContainer.addEventListener("click",toggleProductDetailContainer);
+  productDetailContainer.addEventListener("click",toggleProductDetailContainer('#productDetail'));
 
   let img = document.createElement("img");
   img.src = product.img;
@@ -144,14 +204,55 @@ function openDetail(product) {
     body.classList.add("no-scroll");
   }
   body.append(productDetailContainer);
-  toggleProductDetail(productDetailContainer);
+  toggleItem(productDetailContainer);
 }
 
-//******************************************************************************************************
-//******************************************************************************************************
+/******************************************************************************************************
+  FILTER CATEGORIES
+*******************************************************************************************************/
+
+function filterProducts(category, itemSelected){
+  let categories = Array.from(document.querySelectorAll('a'));
+  let menus = categories.filter((item) => {
+    return item.classList.contains('item');
+  });
+
+  menus.forEach((item) => {
+    if(item.classList.contains('item-active')){
+      item.classList.remove('item-active');
+    }
+  });
+
+  menus.forEach((item) => {
+    if(item.textContent === itemSelected.textContent){
+      item.classList.add('item-active');
+    }
+  });
+
+  cardsContainer.innerHTML = "";
+
+  if(!mobileMenu.classList.contains('inactive')){
+    toggleOption(mobileMenu);
+  }
+
+  if(category === 'All'){
+    renderProducts(productList);
+    return;
+  }
+
+  let filteredProducts = productList.filter((product) => {
+    return product.category == category;
+  });
+
+  renderProducts(filteredProducts);
+
+}
+
+/******************************************************************************************************
+  EVENT LISTENER
+*******************************************************************************************************/
 
 menuEmail.addEventListener("click", toggleDesktopMenu);
-
 function toggleDesktopMenu() {
   toggleOption(shoppingCartContainer);
   toggleOption(mobileMenu);
@@ -159,11 +260,8 @@ function toggleDesktopMenu() {
   desktopMenu.classList.toggle("inactive");
 }
 
-//***************************************************************************************************
-//***************************************************************************************************
 
 hamMenu.addEventListener("click", toggleMobileMenu);
-
 function toggleMobileMenu() {
   toggleOption(shoppingCartContainer);
   toggleOption(desktopMenu);
@@ -171,11 +269,8 @@ function toggleMobileMenu() {
   mobileMenu.classList.toggle("inactive");
 }
 
-//***************************************************************************************************
-//***************************************************************************************************
 
 shopMenu.addEventListener("click", toggleShopMenu);
-
 function toggleShopMenu() {
   toggleOption(mobileMenu);
   toggleOption(desktopMenu);
@@ -183,24 +278,61 @@ function toggleShopMenu() {
   shoppingCartContainer.classList.toggle("inactive");
   if (shoppingCartContainer.classList.contains("inactive")) {
     cardsContainer.classList.remove("cards-container--aside-open");
-  }
-  if (window.innerWidth <= 640) {
-    body.classList.toggle("no-scroll");
+  } if (window.innerWidth <= 640) {
+      body.classList.toggle("no-scroll");
   }
 }
 
-//****************************************************************************************************
-//****************************************************************************************************
+backtoHomeBtn.addEventListener('click', toggleShopMenu);
 
-//*****************************************************************************************************
-//***************************************************************************************************
+/****************************************************************************************************
+  ADD TO SHOPPING CART FUNCTIONS
+*****************************************************************************************************/
 
-function toggleProductDetail(query) {
-  query.classList.toggle("inactive");
+function addToShoppingCart(product, btn){
+  let itemToCart = btn.lastElementChild;
+  itemToCart.classList.add("to-cart-animation");
+
+  setTimeout(() => {
+    itemToCart.classList.remove("to-cart-animation");
+  }, 10000);
+
+  shoppingCart.push(product);
+  counter();
+  renderProductsListOfCart();
+  refreshOrderTotal();
+}
+
+
+function counter(){
+  let itemsCounter = document.querySelector("#items-counter");
+  if(parseInt(shoppingCart.length) === 0){
+    itemsCounter.classList.add("inactive");
+  } else{
+    itemsCounter.classList.remove("inactive");
+  }
+  itemsCounter.innerHTML = shoppingCart.length;
+}
+
+
+function refreshOrderTotal(){
+  let orderTotal = document.querySelector("#order-total");
+  let total = 0;
+  shoppingCart.forEach((product) =>{
+    total += product.price;
+  });
+
+  orderTotal.innerHTML = `$ ${total}`;
 }
 
 //*****************************************************************************************************
-//***************************************************************************************************
+// OTHER FUNCTIONS
+//*****************************************************************************************************
+
+function toggleItem(item) {
+  item.classList.toggle("inactive");
+}
+
 
 function removeProductDetail() {
   body.classList.remove("no-scroll");
@@ -209,6 +341,7 @@ function removeProductDetail() {
   cardsContainer.classList.remove("cards-container--aside-open");
 }
 
+
 function toggleOption(element) {
   const question = element.classList.contains("inactive");
   if (!question) {
@@ -216,15 +349,42 @@ function toggleOption(element) {
   }
 }
 
+
 function toggleProductDetailContainer(element) {
   let item = document.querySelector(element);
   const question = document.querySelectorAll(element).length > 0;
   if (question) {
     document.querySelectorAll(element).forEach((value) => {
       value.remove();
-      toggleProductDetail(item);
+      toggleItem(item);
     });
   }
 }
 
+function removeNoScroll() {
+  let isThereActiveProduct = document.querySelectorAll("#productDetail").length > 0;
+
+  if(window.innerWidth > 640){
+    body.classList.remove("no-scroll");
+  } else if (isThereActiveProduct){
+    body.classList.add("no-scroll");
+    cardsContainer.classList.remove("cards-container--aside-open");
+
+  }
+
+  if(isThereActiveProduct && window.innerWidth > 640){
+    cardsContainer.classList.add("cards-container--aside-open");
+  }
+}
+
+
+//***********************************************************************************************************
+// CALLING FUNCTIONS
+//***********************************************************************************************************
+
 renderProducts(productList);
+renderProductsListOfCart();
+counter();
+refreshOrderTotal();
+window.onresize = removeNoScroll;
+//CheckoutBtn.onclick = () => { alert("Muchas gracias por ver esta demo, aún le faltan muchas funcionalidades, pero seguiré actualizando el proyecto..."); };

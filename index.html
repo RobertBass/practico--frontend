@@ -19,22 +19,22 @@
 
         <ul>
           <li>
-            <a href="/">All</a>
+            <a class="item item-desktop item-active" onclick="filterProducts('All', this)">All</a>
           </li>
           <li>
-            <a href="/">Electronics</a>
+            <a class="item item-desktop" onclick="filterProducts('Electronics', this)">Electronics</a>
           </li>
           <li>
-            <a href="/">Furniture</a>
+            <a class="item item-desktop" onclick="filterProducts('Furniture', this)">Furniture</a>
           </li>
           <li>
-            <a href="/">Clothes</a>
+            <a class="item item-desktop" onclick="filterProducts('Clothes', this)">Clothes</a>
           </li>
           <li>
-            <a href="/">Toys</a>
+            <a class="item item-desktop" onclick="filterProducts('Toys', this)">Toys</a>
           </li>
           <li>
-            <a href="/">Others</a>
+            <a class="item item-desktop" onclick="filterProducts('Others', this)">Others</a>
           </li>
         </ul>
       </div>
@@ -43,7 +43,7 @@
           <li class="navbar-email">your@email.com</li>
           <li class="navbar-shopping-cart">
             <img src="./src/icons/icon_shopping_cart.svg" alt="shopping-cart" />
-            <div>2</div>
+            <div id="items-counter"></div>
           </li>
         </ul>
       </div>
@@ -68,16 +68,19 @@
             <a href="/">CATEGORIES</a>
           </li>
           <li>
-            <a href="/">Electronics</a>
+            <a class="item item-mobile item-active" onclick="filterProducts('All', this)">All</a>
           </li>
           <li>
-            <a href="/">Furnitures</a>
+            <a class="item item-mobile" onclick="filterProducts('Electronics', this)">Electronics</a>
           </li>
           <li>
-            <a href="/">Toys</a>
+            <a class="item item-mobile" onclick="filterProducts('Furniture', this)">Furniture</a>
           </li>
           <li>
-            <a href="/">Others</a>
+            <a class="item item-mobile" onclick="filterProducts('Toys', this)">Toys</a>
+          </li>
+          <li>
+            <a class="item item-mobile" onclick="filterProducts('Others', this)">Others</a>
           </li>
         </ul>
 
@@ -105,86 +108,21 @@
         <img src="./src/icons/flechita.svg" alt="arrow" />
         <p class="title">My Order</p>
       </div>
-      <div class="my-order-content">
-        <div class="shopping-cart">
-          <figure>
-            <img
-              src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-              alt="bike"
-            />
-          </figure>
-          <p>Bike</p>
-          <p>$100</p>
-          <img src="./src/icons/icon_close.png" alt="close" />
-        </div>
-        <div class="shopping-cart">
-          <figure>
-            <img
-              src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-              alt="bike"
-            />
-          </figure>
-          <p>Bike</p>
-          <p>$100</p>
-          <img src="./src/icons/icon_close.png" alt="close" />
-        </div>
-        <div class="shopping-cart">
-          <figure>
-            <img
-              src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-              alt="bike"
-            />
-          </figure>
-          <p>Bike</p>
-          <p>$100</p>
-          <img src="./src/icons/icon_close.png" alt="close" />
-        </div>
-        <div class="shopping-cart">
-          <figure>
-            <img
-              src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-              alt="bike"
-            />
-          </figure>
-          <p>Bike</p>
-          <p>$100</p>
-          <img src="./src/icons/icon_close.png" alt="close" />
-        </div>
-        <div class="shopping-cart">
-          <figure>
-            <img
-              src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-              alt="bike"
-            />
-          </figure>
-          <p>Bike</p>
-          <p>$100</p>
-          <img src="./src/icons/icon_close.png" alt="close" />
-        </div>
-        <div class="shopping-cart">
-          <figure>
-            <img
-              src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-              alt="bike"
-            />
-          </figure>
-          <p>Bike</p>
-          <p>$100</p>
-          <img src="./src/icons/icon_close.png" alt="close" />
-        </div>
+      <div class="my-order-content"></div>
+
+      <div class="checkout-content">
         <div class="order">
           <p>
             <span>Total:</span>
           </p>
-          <p>$600.00</p>
+          <p id="order-total">$0.00</p>
         </div>
-        <button class="primary-button add-to-cart-button">Checkout</button>
       </div>
+      <button id="btn-checkout" class="primary-button add-to-cart-button">Checkout</button>
     </aside>
+
     <main>
-      <div class="cards-container">
-        
-      </div>
+      <div class="cards-container"></div>
     </main>
     <script src="./src/scripts/main.js"></script>
   </body>
